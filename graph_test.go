@@ -1,4 +1,4 @@
-package memusage
+package objectgraph
 
 import (
 	"log"
