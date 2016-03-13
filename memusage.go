@@ -142,14 +142,14 @@ func (pr *profiler) Visit(v reflect.Value, ctx Context) bool {
 	sz := size(v)
 	switch v.Kind() {
 	case reflect.Array:
-		if isScalar(t) {
+		if isScalar(t.Elem()) {
 			stop = true
 			sz += scalarSize(t.Elem()) * uint64(v.Len())
 		} else {
 			sz += uint64(t.Size()) * uint64(v.Len())
 		}
 	case reflect.Slice:
-		if isScalar(t) {
+		if isScalar(t.Elem()) {
 			stop = true
 			sz += scalarSize(t.Elem()) * uint64(v.Cap())
 		} else {
