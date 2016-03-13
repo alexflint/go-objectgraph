@@ -1,8 +1,10 @@
 package memusage
 
 import (
+	"log"
 	"testing"
 
+	"github.com/dustin/go-humanize"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -20,9 +22,13 @@ func TestMemusage(t *testing.T) {
 	obj := T{
 		X: 3,
 		Y: &U{
-			A: "abababa",
+			A: "123456",
 			B: []int64{3, 2, 1},
 		},
 	}
-	assert.Equal(t, 143, int(Bytes(obj)))
+	p := NewProfile(&obj)
+	for t, sz := range p.sizeByType {
+		log.Printf("  %8s %s", humanize.Bytes(sz), t.String())
+	}
+	assert.Equal(t, 56, int(p.TotalBytes))
 }
